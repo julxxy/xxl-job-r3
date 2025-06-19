@@ -63,8 +63,8 @@ java -jar target/xxl-job-admin-*.jar
 
 ## 7. Access the Admin Panel
 
-Open your browser and visit:
-http://localhost:8080/xxl-job-admin
+See also:
+https://github.com/julxxy/xxl-job-panel-r3
 
 ------
 
