@@ -1,4 +1,4 @@
-package com.xxl.job.admin.controller;
+package com.xxl.job.admin.controller.r3support;
 
 import com.xxl.job.admin.controller.interceptor.PermissionInterceptor;
 import com.xxl.job.admin.core.model.XxlJobGroup;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Those APIs are support for A third-party React-based web admin panel for XXL-JOB.
  *
- * @author weasley
+ * @author Julian
  * @version 1.0.0
  */
 @RestController
