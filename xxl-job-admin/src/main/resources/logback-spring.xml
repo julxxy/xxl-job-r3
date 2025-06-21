@@ -79,7 +79,6 @@
 
         <root level="INFO">
             <appender-ref ref="STDOUT"/>
-            <appender-ref ref="file"/>
         </root>
     </springProfile>
 
