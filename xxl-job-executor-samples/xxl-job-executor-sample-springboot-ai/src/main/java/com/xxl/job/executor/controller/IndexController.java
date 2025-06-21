@@ -6,11 +6,19 @@ import io.github.imfangs.dify.client.DifyClientFactory;
 import io.github.imfangs.dify.client.DifyWorkflowClient;
 import io.github.imfangs.dify.client.callback.WorkflowStreamCallback;
 import io.github.imfangs.dify.client.enums.ResponseMode;
-import io.github.imfangs.dify.client.event.*;
+import io.github.imfangs.dify.client.event.ErrorEvent;
+import io.github.imfangs.dify.client.event.NodeFinishedEvent;
+import io.github.imfangs.dify.client.event.NodeStartedEvent;
+import io.github.imfangs.dify.client.event.WorkflowFinishedEvent;
+import io.github.imfangs.dify.client.event.WorkflowStartedEvent;
 import io.github.imfangs.dify.client.model.workflow.WorkflowRunRequest;
 import io.github.imfangs.dify.client.model.workflow.WorkflowRunResponse;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Consumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
@@ -79,10 +87,9 @@ public class IndexController {
 
     // --------------------------------- dify workflow ---------------------------------
 
-    @Value("${dify.api-key}")
-    private String apiKey;
-    @Value("${dify.base-url}")
-    private String baseUrl;
+    // dify config sample
+    private final String apiKey = "http://localhost/v1";
+    private final String baseUrl = "app-OUVgNUOQRIMokfmuJvBJoUTN";
 
     @GetMapping("/dify/simple")
     @ResponseBody

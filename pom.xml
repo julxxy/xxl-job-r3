@@ -60,16 +60,23 @@
 
 	<scm>
 		<tag>master</tag>
-		<url>https://github.com/xuxueli/xxl-job.git</url>
-		<connection>scm:git:https://github.com/xuxueli/xxl-job.git</connection>
-		<developerConnection>scm:git:git@github.com:xuxueli/xxl-job.git</developerConnection>
+		<url>https://github.com/julxxy/xxl-job-panel-r3.git</url>
+		<connection>scm:git:https://github.com/julxxy/xxl-job-panel-r3.git</connection>
+		<developerConnection>scm:git:git@github.com:julxxy/xxl-job-panel-r3.git</developerConnection>
 	</scm>
+
 	<developers>
 		<developer>
 			<id>XXL</id>
 			<name>xuxueli</name>
 			<email>931591021@qq.com</email>
 			<url>https://github.com/xuxueli</url>
+		</developer>
+		<developer>
+			<id>Julian</id>
+			<name>Julian</name>
+			<email>julxxy@outlook.com</email>
+			<url>https://github.com/julxxy</url>
 		</developer>
 	</developers>
 
