@@ -35,7 +35,30 @@
         </root>
     </springProfile>
 
-    <!-- 开发环境：控制台 + 文件 -->
+    <!-- 本地环境: 只输出控制台 -->
+    <springProfile name="local,feige">
+        <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder charset="UTF-8">
+                <pattern>${R3_CONSOLE_LOG_PATTERN}</pattern>
+            </encoder>
+        </appender>
+        <logger name="com.xxl.job" level="info"/>
+        <logger name="org.springframework.core" level="warn"/>
+        <logger name="org.springframework.beans" level="warn"/>
+        <logger name="org.springframework.context" level="warn"/>
+        <logger name="org.springframework.web" level="warn"/>
+        <logger name="org.springframework.web.servlet" level="info"/>
+        <logger name="org.springframework.web.servlet.DispatcherServlet" level="debug"/>
+        <logger name="org.springframework.context.support.PropertySourcesPlaceholderConfigurer" level="info"/>
+        <logger name="org.springframework.security.core.userdetails" level="debug"/>
+        <logger name="org.springframework.jdbc.datasource.DataSourceTransactionManager" level="debug"/>
+        <logger name="org.springframework.jdbc.core.JdbcTemplate" level="debug"/>
+
+        <root level="INFO">
+            <appender-ref ref="STDOUT"/>
+        </root>
+    </springProfile>
+
     <springProfile name="dev">
         <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
             <encoder charset="UTF-8">
@@ -60,8 +83,7 @@
         </root>
     </springProfile>
 
-    <!-- 本地环境：只输出控制台 -->
-    <springProfile name="local,feige">
+    <springProfile name="test">
         <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
             <encoder charset="UTF-8">
                 <pattern>${R3_CONSOLE_LOG_PATTERN}</pattern>
@@ -81,6 +103,7 @@
 
         <root level="INFO">
             <appender-ref ref="STDOUT"/>
+            <appender-ref ref="file"/>
         </root>
     </springProfile>
 
