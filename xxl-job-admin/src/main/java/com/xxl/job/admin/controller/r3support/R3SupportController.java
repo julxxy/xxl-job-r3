@@ -4,11 +4,14 @@ import com.xxl.job.admin.controller.interceptor.PermissionInterceptor;
 import com.xxl.job.admin.core.model.XxlJobGroup;
 import com.xxl.job.admin.core.model.XxlJobInfo;
 import com.xxl.job.admin.core.model.XxlJobLogGlue;
+import com.xxl.job.admin.core.model.XxlJobUser;
 import com.xxl.job.admin.core.util.I18nUtil;
 import com.xxl.job.admin.dao.XxlJobGroupDao;
 import com.xxl.job.admin.dao.XxlJobInfoDao;
 import com.xxl.job.admin.dao.XxlJobLogGlueDao;
+import com.xxl.job.admin.dao.XxlJobUserDao;
 import com.xxl.job.admin.service.XxlJobService;
+import com.xxl.job.admin.service.impl.R3SupportService;
 import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.glue.GlueTypeEnum;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,6 +19,8 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,11 +37,29 @@ public class R3SupportController {
     @Autowired
     private XxlJobService xxlJobService;
     @Autowired
+    private XxlJobUserDao xxlJobUserDao;
+    @Autowired
     private XxlJobGroupDao xxlJobGroupDao;
     @Autowired
     private XxlJobInfoDao xxlJobInfoDao;
     @Autowired
     private XxlJobLogGlueDao xxlJobLogGlueDao;
+
+    /**
+     * 获取登录态用户角色
+     */
+    @PostMapping("/user/role/{userName}")
+    public ReturnT<Object> getUserRole(@PathVariable("userName") String userName) {
+        if (userName == null || userName.trim().isEmpty()) {
+            return new ReturnT<>(500, I18nUtil.getString("login_param_empty"));
+        }
+        XxlJobUser xxlJobUser = xxlJobUserDao.loadByUserName(userName);
+        if (xxlJobUser == null) {
+            return new ReturnT<>(500, I18nUtil.getString("login_param_unvalid"));
+        }
+        return new ReturnT<>(R3SupportService.convertUserInfo(xxlJobUser));
+    }
+
     /**
      * 图表数据
      */
@@ -74,4 +97,5 @@ public class R3SupportController {
         List<XxlJobLogGlue> jobLogGlues = xxlJobLogGlueDao.findByJobId(jobId);
         return new ReturnT<>(jobLogGlues);
     }
+
 }
