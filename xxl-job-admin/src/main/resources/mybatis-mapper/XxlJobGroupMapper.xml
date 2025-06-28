@@ -92,4 +92,14 @@
         </trim>
     </select>
 
+    <select id="findByGroupIds" resultMap="XxlJobGroup" parameterType="java.util.List">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM xxl_job_group AS t
+        WHERE t.id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
 </mapper>

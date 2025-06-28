@@ -9,10 +9,9 @@ import com.xxl.job.core.biz.model.ReturnT;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.math.BigInteger;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
-
-import java.math.BigInteger;
 
 /**
  * @author xuxueli 2019-05-04 22:13:264
@@ -28,6 +27,10 @@ public class LoginService {
 
     // ---------------------- token tool ----------------------
 
+    /**
+     * Make token
+     * @see com.xxl.job.admin.core.util.TokenUtil#generateToken(XxlJobUser)
+     */
     private String makeToken(XxlJobUser xxlJobUser){
         String tokenJson = JacksonUtil.writeValueAsString(xxlJobUser);
         String tokenHex = new BigInteger(tokenJson.getBytes()).toString(16);
