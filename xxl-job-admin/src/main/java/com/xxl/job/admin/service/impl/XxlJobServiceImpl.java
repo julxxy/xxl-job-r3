@@ -12,19 +12,29 @@ import com.xxl.job.admin.core.thread.JobScheduleHelper;
 import com.xxl.job.admin.core.thread.JobTriggerPoolHelper;
 import com.xxl.job.admin.core.trigger.TriggerTypeEnum;
 import com.xxl.job.admin.core.util.I18nUtil;
-import com.xxl.job.admin.dao.*;
+import com.xxl.job.admin.dao.XxlJobGroupDao;
+import com.xxl.job.admin.dao.XxlJobInfoDao;
+import com.xxl.job.admin.dao.XxlJobLogDao;
+import com.xxl.job.admin.dao.XxlJobLogGlueDao;
+import com.xxl.job.admin.dao.XxlJobLogReportDao;
 import com.xxl.job.admin.service.XxlJobService;
 import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.enums.ExecutorBlockStrategyEnum;
 import com.xxl.job.core.glue.GlueTypeEnum;
 import com.xxl.job.core.util.DateUtil;
 import jakarta.annotation.Resource;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
-import java.text.MessageFormat;
-import java.util.*;
 
 /**
  * core job action for xxl-job
@@ -44,14 +54,14 @@ public class XxlJobServiceImpl implements XxlJobService {
 	private XxlJobLogGlueDao xxlJobLogGlueDao;
 	@Resource
 	private XxlJobLogReportDao xxlJobLogReportDao;
-	
+
 	@Override
 	public Map<String, Object> pageList(int start, int length, int jobGroup, int triggerStatus, String jobDesc, String executorHandler, String author) {
 
 		// page list
 		List<XxlJobInfo> list = xxlJobInfoDao.pageList(start, length, jobGroup, triggerStatus, jobDesc, executorHandler, author);
 		int list_count = xxlJobInfoDao.pageListCount(start, length, jobGroup, triggerStatus, jobDesc, executorHandler, author);
-		
+
 		// package result
 		Map<String, Object> maps = new HashMap<String, Object>();
 	    maps.put("recordsTotal", list_count);		// 总记录数
@@ -156,7 +166,7 @@ public class XxlJobServiceImpl implements XxlJobService {
 		jobInfo.setUpdateTime(new Date());
 		jobInfo.setGlueUpdatetime(new Date());
 		// remove the whitespace
-		jobInfo.setExecutorHandler(jobInfo.getExecutorHandler().trim());
+		jobInfo.setExecutorHandler(null != jobInfo.getExecutorHandler() ? jobInfo.getExecutorHandler().trim() : "");
 		xxlJobInfoDao.save(jobInfo);
 		if (jobInfo.getId() < 1) {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, (I18nUtil.getString("jobinfo_field_add")+I18nUtil.getString("system_fail")) );
@@ -293,7 +303,7 @@ public class XxlJobServiceImpl implements XxlJobService {
 		exists_jobInfo.setMisfireStrategy(jobInfo.getMisfireStrategy());
 		exists_jobInfo.setExecutorRouteStrategy(jobInfo.getExecutorRouteStrategy());
 		// remove the whitespace
-		exists_jobInfo.setExecutorHandler(jobInfo.getExecutorHandler().trim());
+		exists_jobInfo.setExecutorHandler(null != jobInfo.getExecutorHandler() ? jobInfo.getExecutorHandler().trim() : "");
 		exists_jobInfo.setExecutorParam(jobInfo.getExecutorParam());
 		exists_jobInfo.setExecutorBlockStrategy(jobInfo.getExecutorBlockStrategy());
 		exists_jobInfo.setExecutorTimeout(jobInfo.getExecutorTimeout());
