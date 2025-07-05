@@ -71,9 +71,10 @@ https://github.com/julxxy/xxl-job-panel-r3
 This table helps you quickly identify which front-end and back-end versions are compatible. Whenever a major update
 occurs on either side, please update this table accordingly for clarity.
 
-|                     **xxl-job-panel-r3** (Front-end)                     |                     **xxl-job-r3** (Back-end)                      | Description                                 |
-|:------------------------------------------------------------------------:|:------------------------------------------------------------------:|:--------------------------------------------|
-| [v1.0.2](https://github.com/julxxy/xxl-job-panel-r3/releases/tag/v1.0.2) | [v3.1.2](https://github.com/julxxy/xxl-job-r3/releases/tag/v3.1.2) | LDAP login supported, menu permission fixes |
+|                     **xxl-job-panel-r3** (Front-end)                     |                     **xxl-job-r3** (Back-end)                      | Description                                                                                                                 |
+|:------------------------------------------------------------------------:|:------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------|
+| [v1.0.2](https://github.com/julxxy/xxl-job-panel-r3/releases/tag/v1.0.2) | [v3.1.2](https://github.com/julxxy/xxl-job-r3/releases/tag/v3.1.2) | LDAP login supported, menu permission fixes                                                                                 |
+| [v1.0.3](https://github.com/julxxy/xxl-job-panel-r3/releases/tag/v1.0.3) | [v3.1.2](https://github.com/julxxy/xxl-job-r3/releases/tag/v3.1.2) | - Added new favicon.svg and multiple SVG icons<br/>- improved LDAP login button styling, enabled logo to redirect to GitHub |
 
 > **How to maintain:**
 > Whenever the front-end or back-end receives significant updates, please record the new mapping here. Link each version
