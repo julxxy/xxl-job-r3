@@ -1,6 +1,6 @@
 FROM eclipse-temurin:21-jre
 
-MAINTAINER julian
+LABEL maintainer="Julian"
 
 ENV PARAMS=""
 ENV SPRING_ARGS=""
