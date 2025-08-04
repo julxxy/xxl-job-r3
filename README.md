@@ -16,10 +16,17 @@ This is the back-end service for [The third-party React-based web admin panel fo
 docker pull julxxy/xxl-job-r3:latest
 
 # Quick start with Docker
-docker run -d \
-  --name xxl-job-r3 \
-  -p 8081:8080 \
-  -e SPRING_ARGS="--spring.datasource.url=jdbc:mysql://your-db:3306/xxl_job --spring.datasource.username=root --spring.datasource.password=password" \
+JAVA_OPTS="-Xmx512m -Xms512m"
+SPRING_ARGS="--server.servlet.context-path=/xxl-job-admin \
+--spring.datasource.url=jdbc:mysql://your-db-ip:3306/xxl_job \
+--spring.datasource.username=root \
+--spring.datasource.password=password"
+
+docker run -d --name xxl-job-r3 \
+  -p 8080:8080 \
+  -e TZ=Asia/Shanghai \
+  -e JAVA_OPTS="${JAVA_OPTS}" \
+  -e SPRING_ARGS="${SPRING_ARGS}" \
   julxxy/xxl-job-r3:latest
 ```
 
