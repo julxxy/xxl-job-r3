@@ -4,14 +4,14 @@
     <contextName>logback</contextName>
 
     <!-- 支持通过 JVM 参数或 application.properties 传入 -->
-    <springProperty scope="context" name="log.path" source="log.path" defaultValue="/data/logs/xxl-job-r3/xxl-job-admin.log"/>
+    <springProperty scope="context" name="log.path" source="log.path" defaultValue="/data/logs/xxl-job/xxl-job-admin.log"/>
     <property name="CONSOLE_LOG_PATTERN" value="%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr([%X{X-B3-TraceId:-}]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
 
     <!-- 文件输出 -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.path}</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>/data/logs/xxl-job-r3/xxl-job-admin.%d{yyyy-MM-dd}.zip</fileNamePattern>
+            <fileNamePattern>/data/logs/xxl-job/xxl-job-admin.%d{yyyy-MM-dd}.zip</fileNamePattern>
             <maxHistory>30</maxHistory>
             <totalSizeCap>10GB</totalSizeCap>
         </rollingPolicy>
