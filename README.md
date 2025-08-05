@@ -48,7 +48,7 @@ services:
         --server.servlet.context-path=/xxl-job-r3
       JAVA_OPTS: "-Xms512m -Xmx1024m"
     volumes:
-      - ./logs:/data/applogs
+      - ./logs:/data/logs/xxl-job-r3/
     depends_on:
       - mysql
     restart: unless-stopped
