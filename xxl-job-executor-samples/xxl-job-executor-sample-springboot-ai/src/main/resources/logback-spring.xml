@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration debug="false" scan="true" scanPeriod="1 seconds">
+<configuration>
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <contextName>logback</contextName>
 
-    <springProperty scope="context" name="log.path" source="log.path" defaultValue="logs/xxl-job-executor-sample-springboot-ai.log"/>
+    <springProperty scope="context" name="log.dir" source="log.dir" defaultValue="logs"/>
+    <springProperty scope="context" name="log.name" source="log.name" defaultValue="xxl-job-executor-sample-springboot-ai"/>
     <property name="CONSOLE_LOG_PATTERN" value="%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr([%X{X-B3-TraceId:-}]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
-    <property name="FILE_LOG_PATTERN" value="%date %level [%thread] %logger{36} [%file : %line] %msg%n"/>
+    <property name="FILE_LOG_PATTERN" value="%date %level [%thread] %logger{36} [%file:%line] %msg%n"/>
 
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder charset="UTF-8">
@@ -14,9 +15,9 @@
     </appender>
 
     <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.path}</file>
+        <file>${log.dir}/${log.name}.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log.path}.%d{yyyy-MM-dd}.zip</fileNamePattern>
+            <fileNamePattern>${log.dir}/${log.name}.%d{yyyy-MM-dd}.zip</fileNamePattern>
             <maxHistory>7</maxHistory>
             <totalSizeCap>1GB</totalSizeCap>
         </rollingPolicy>

@@ -1,47 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration debug="false" scan="true" scanPeriod="1 seconds">
+<configuration>
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <contextName>logback</contextName>
 
     <!-- 支持通过 JVM 参数或 application.properties 传入 -->
-    <springProperty scope="context" name="log.path" source="log.path" defaultValue="/data/applogs/xxl-job/xxl-job-admin.log"/>
-    <property name="R3_CONSOLE_LOG_PATTERN" value="%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr([%X{X-B3-TraceId:-}]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
-
-    <!-- 控制台输出 -->
-    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%d{HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>
-        </encoder>
-    </appender>
+    <springProperty scope="context" name="log.path" source="log.path" defaultValue="/data/logs/xxl-job-r3/xxl-job-admin.log"/>
+    <property name="CONSOLE_LOG_PATTERN" value="%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr([%X{X-B3-TraceId:-}]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
 
     <!-- 文件输出 -->
-    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.path}</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log.path}.%d{yyyy-MM-dd}.zip</fileNamePattern>
+            <fileNamePattern>/data/logs/xxl-job-r3/xxl-job-admin.%d{yyyy-MM-dd}.zip</fileNamePattern>
             <maxHistory>30</maxHistory>
             <totalSizeCap>10GB</totalSizeCap>
         </rollingPolicy>
-        <encoder>
-            <pattern>%date %level [%thread] %logger{36} [%file : %line] %msg%n</pattern>
+        <encoder charset="UTF-8">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %level [%thread] [%X{X-B3-TraceId:-}] %logger{36} [%file:%line] %msg%n</pattern>
         </encoder>
     </appender>
 
-    <!-- xxl-job 默认: 控制台 + 文件 -->
-    <springProfile name="default">
+    <!-- 默认|生产: 控制台 + 文件输出 -->
+    <springProfile name="default,prod">
+        <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder charset="UTF-8">
+                <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            </encoder>
+        </appender>
+
+        <logger name="com.xxl.job" level="info"/>
+        <logger name="org.springframework" level="warn"/>
+        <logger name="root" level="error"/>
+
         <root level="INFO">
-            <appender-ref ref="file"/>
-            <appender-ref ref="console"/>
+            <appender-ref ref="FILE"/>
+            <appender-ref ref="STDOUT"/>
         </root>
     </springProfile>
 
-    <!-- 本地环境: 只输出控制台 -->
-    <springProfile name="local,feige">
+    <!-- 本地: 控制台 -->
+    <springProfile name="dev,local,feige">
         <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
             <encoder charset="UTF-8">
-                <pattern>${R3_CONSOLE_LOG_PATTERN}</pattern>
+                <pattern>${CONSOLE_LOG_PATTERN}</pattern>
             </encoder>
         </appender>
+
         <logger name="com.xxl.job" level="info"/>
         <logger name="org.springframework.core" level="warn"/>
         <logger name="org.springframework.beans" level="warn"/>
@@ -59,50 +63,21 @@
         </root>
     </springProfile>
 
-    <springProfile name="dev">
-        <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-            <encoder charset="UTF-8">
-                <pattern>${R3_CONSOLE_LOG_PATTERN}</pattern>
-            </encoder>
-        </appender>
-        <logger name="com.xxl.job" level="info"/>
-        <logger name="org.springframework.core" level="warn"/>
-        <logger name="org.springframework.beans" level="warn"/>
-        <logger name="org.springframework.context" level="warn"/>
-        <logger name="org.springframework.web" level="warn"/>
-        <logger name="org.springframework.web.servlet" level="info"/>
-        <logger name="org.springframework.web.servlet.DispatcherServlet" level="debug"/>
-        <logger name="org.springframework.context.support.PropertySourcesPlaceholderConfigurer" level="info"/>
-        <logger name="org.springframework.security.core.userdetails" level="debug"/>
-        <logger name="org.springframework.jdbc.datasource.DataSourceTransactionManager" level="debug"/>
-        <logger name="org.springframework.jdbc.core.JdbcTemplate" level="debug"/>
-
-        <root level="INFO">
-            <appender-ref ref="STDOUT"/>
-        </root>
-    </springProfile>
-
+    <!-- 测试: 控制台 -->
     <springProfile name="test">
         <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
             <encoder charset="UTF-8">
-                <pattern>${R3_CONSOLE_LOG_PATTERN}</pattern>
+                <pattern>${CONSOLE_LOG_PATTERN}</pattern>
             </encoder>
         </appender>
+
         <logger name="com.xxl.job" level="info"/>
-        <logger name="org.springframework.core" level="warn"/>
-        <logger name="org.springframework.beans" level="warn"/>
-        <logger name="org.springframework.context" level="warn"/>
-        <logger name="org.springframework.web" level="warn"/>
-        <logger name="org.springframework.web.servlet" level="info"/>
-        <logger name="org.springframework.web.servlet.DispatcherServlet" level="debug"/>
-        <logger name="org.springframework.context.support.PropertySourcesPlaceholderConfigurer" level="info"/>
-        <logger name="org.springframework.security.core.userdetails" level="debug"/>
-        <logger name="org.springframework.jdbc.datasource.DataSourceTransactionManager" level="debug"/>
-        <logger name="org.springframework.jdbc.core.JdbcTemplate" level="debug"/>
+        <logger name="org.springframework" level="warn"/>
+        <logger name="root" level="error"/>
 
         <root level="INFO">
             <appender-ref ref="STDOUT"/>
-            <appender-ref ref="file"/>
+            <appender-ref ref="FILE"/>
         </root>
     </springProfile>
 
