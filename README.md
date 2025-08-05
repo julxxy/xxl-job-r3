@@ -17,7 +17,7 @@ docker pull julxxy/xxl-job-r3:latest
 
 # Quick start with Docker
 JAVA_OPTS="-Xmx512m -Xms512m"
-SPRING_ARGS="--server.servlet.context-path=/xxl-job-r3 \
+SPRING_ARGS="--server.servlet.context-path=/xxl-job-admin \
 --spring.datasource.url=jdbc:mysql://your-db-ip:3306/xxl_job \
 --spring.datasource.username=root \
 --spring.datasource.password=password"
@@ -45,7 +45,7 @@ services:
         --spring.datasource.url=jdbc:mysql://mysql:3306/xxl_job?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
         --spring.datasource.username=root
         --spring.datasource.password=password
-        --server.servlet.context-path=/xxl-job-r3
+        --server.servlet.context-path=/xxl-job-admin
       JAVA_OPTS: "-Xms512m -Xmx1024m"
     volumes:
       - ./logs:/data/logs/xxl-job-r3/
