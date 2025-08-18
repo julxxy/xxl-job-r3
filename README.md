@@ -142,10 +142,7 @@ Check the compatibility between front-end and back-end versions: [version-mappin
 | [v1.0.3](https://github.com/julxxy/xxl-job-panel-r3/releases/tag/v1.0.3) | [v3.1.2](https://github.com/julxxy/xxl-job-r3/releases/tag/v3.1.2) | Added new favicon.svg and multiple SVG icons, improved LDAP login button styling, enabled logo to redirect to GitHub, upgraded dependencies |
 |                                    …                                     |                                 …                                  | …                                                                                                                                           |
 
-> **Maintenance Note:** Please update both
-> the [version-mapping.json](https://raw.githubusercontent.com/julxxy/xxl-job-panel-r3/refs/heads/main/doc/version-mapping.json)
-> file and the table
-> above when adding new versions.
+> **Maintenance Note:** Please update both the [version-mapping.json](https://raw.githubusercontent.com/julxxy/xxl-job-panel-r3/refs/heads/main/doc/version-mapping.json) file and the table above when adding new versions.
 
 ---
 
